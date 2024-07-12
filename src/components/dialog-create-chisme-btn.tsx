@@ -35,7 +35,7 @@ function DialogCreateChismeButton({ className, content = "+" }: { className?: st
             </Label>
             <Input
               id="title"
-              placeholder='Por ej.: Iara del Sarmiento tiene 7 novios. Uno de ellos es mi novio.'
+              placeholder='Por ej.: Iara del barrio Sarmiento tiene 7 novios. Uno de ellos es mi novio.'
               className="focus:border-primary focus-visible:ring-0 transition-colors"
             />
           </div>
