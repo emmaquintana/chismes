@@ -8,45 +8,55 @@ datasource db {
 }
 
 model chismes {
-  chisme_id        Int      @id
-  chisme_title     String   @db.VarChar(250)
-  chisme_desc      String   @db.VarChar(2048)
-  chisme_createdAt DateTime @default(now()) @db.Timestamp(0)
-  chisme_updatedAt DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.Timestamp(0)
-  chisme_isActive  Int?     @db.TinyInt
-  user_id          String   @db.VarChar(48)
-  users            users    @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "chismes_ibfk_1")
+  user_id   String   @db.VarChar(48)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  desc      String   @db.VarChar(2048)
+  id        Int      @id
+  isActive  Int?     @db.TinyInt
+  title     String   @db.VarChar(250)
+  updatedAt DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.Timestamp(0)
+  users     users    @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "chismes_ibfk_1")
 
   @@index([user_id], map: "user_id")
 }
 
-model users {
-  user_id           String             @id @db.VarChar(48)
-  user_username     String?            @db.VarChar(40)
-  user_email        String             @db.Text
-  user_password     String             @db.VarChar(40)
-  user_createdAt    DateTime           @default(now()) @db.Timestamp(0)
-  user_updatedAt    DateTime?          @db.Timestamp(0)
-  user_profilePhoto Bytes?             @db.Blob
-  user_firstName    String?            @db.VarChar(40)
-  user_lastName     String?            @db.VarChar(40)
-  user_birthdate    DateTime           @db.Date
-  user_gender       users_user_gender?
-  user_follows      Int?               @db.UnsignedMediumInt
-  user_followers    Int?               @db.UnsignedMediumInt
-  user_bio          String?            @db.VarChar(2048)
-  user_status       users_user_status?
-  chismes           chismes[]
+model session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  users     users    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Session_userId_fkey")
+
+  @@index([userId], map: "Session_userId_fkey")
 }
 
-enum users_user_gender {
+model users {
+  id            String        @id
+  bio           String?       @db.VarChar(2048)
+  birthdate     DateTime      @db.Date
+  createdAt     DateTime      @default(now()) @db.Timestamp(0)
+  email         String        @db.Text
+  firstName     String?       @db.VarChar(40)
+  followers     Int?          @db.UnsignedMediumInt
+  follows       Int?          @db.UnsignedMediumInt
+  gender        users_gender?
+  lastName      String?       @db.VarChar(40)
+  password_hash String?       @db.VarChar(255)
+  profilePhoto  Bytes?        @db.Blob
+  status        users_status
+  updatedAt     DateTime?     @db.Timestamp(0)
+  username      String?       @unique(map: "username") @db.VarChar(40)
+  chismes       chismes[]
+  session       session[]
+}
+
+enum users_gender {
   M
   F
   O
 }
 
-enum users_user_status {
-  A @map("1")
-  B @map("2")
-  C @map("3")
+enum users_status {
+  A
+  S
+  B
 }

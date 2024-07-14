@@ -1,6 +1,8 @@
 import ChismeCard from "@/components/chisme-card";
 import DialogCreateChismeButton from "@/components/dialog-create-chisme-btn";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { Button, buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 import React from "react";
 
 export default function Home() {    
@@ -11,7 +13,7 @@ export default function Home() {
         <ChismeCard className="mt-10 animate-fade-in-scale" />
         <ChismeCard className="mt-10 animate-fade-in-scale" />
         <ChismeCard className="mt-10 animate-fade-in-scale" />
-      </MaxWidthWrapper>
+      </MaxWidthWrapper>      
       <DialogCreateChismeButton className="fixed bottom-6 right-6 rounded-full text-3xl font-bold size-16 " />
     </main>
   );
