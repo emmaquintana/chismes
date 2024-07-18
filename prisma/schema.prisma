@@ -8,14 +8,14 @@ datasource db {
 }
 
 model chismes {
-  user_id   String   @db.VarChar(48)
-  createdAt DateTime @default(now()) @db.Timestamp(0)
-  desc      String   @db.VarChar(2048)
-  id        Int      @id
-  isActive  Int?     @db.TinyInt
-  title     String   @db.VarChar(250)
-  updatedAt DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.Timestamp(0)
-  users     users    @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "chismes_ibfk_1")
+  user_id   String    @db.VarChar(48)
+  createdAt DateTime  @default(now()) @db.Timestamp(0)
+  desc      String    @db.VarChar(2048)
+  id        Int       @id @default(autoincrement())
+  isActive  Int?      @db.TinyInt
+  title     String    @db.VarChar(250)
+  updatedAt DateTime? @db.Timestamp(0)
+  users     users     @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "chismes_ibfk_1")
 
   @@index([user_id], map: "user_id")
 }
@@ -44,19 +44,20 @@ model users {
   profilePhoto  Bytes?        @db.Blob
   status        users_status
   updatedAt     DateTime?     @db.Timestamp(0)
-  username      String?       @unique(map: "username") @db.VarChar(40)
+  username      String        @unique(map: "username") @db.VarChar(40)
   chismes       chismes[]
   session       session[]
-}
-
-enum users_gender {
-  M
-  F
-  O
 }
 
 enum users_status {
   A
   S
   B
+}
+
+enum users_gender {
+  M
+  F
+  O
+  NR
 }

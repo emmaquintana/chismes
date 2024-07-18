@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/lib/db";
 import { hash } from "@node-rs/argon2";
 import { cookies } from "next/headers";
@@ -7,26 +9,28 @@ import { generateIdFromEntropySize } from "lucia";
 import { verify } from "@node-rs/argon2";
 
 export async function signup(formData: FormData): Promise<ActionResult> {
-    "use server";
-    const username = formData.get("username");
-    // username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
-    // keep in mind some database (e.g. mysql) are case insensitive
+    const username = formData.get("username");    
     if (
-        typeof username !== "string" ||
-        username.length < 3 ||
-        username.length > 31 ||
-        !/^[a-z0-9_-]+$/.test(username)
+        typeof username !== "string" ||        
+		username.length < 6 ||
+    	username.length > 40
     ) {
         return {
             error: "Invalid username"
         };
     }
     const password = formData.get("password");
-    if (typeof password !== "string" || password.length < 6 || password.length > 255) {
+	const confirmPassword = formData.get("confirmPassword");
+    if (typeof password !== "string" || password.length < 6 || password.length > 40 || password !== confirmPassword) {
         return {
             error: "Invalid password"
         };
     }
+	const email = formData.get("email") as string;
+	const birthdate = formData.get("birthdate") as string;
+	const firstName = formData.get("firstName") as string;
+	const lastName = formData.get("lastName") as string;
+	const gender = formData.get("gender") as string;	
 
     const passwordHash = await hash(password, {
         // recommended minimum parameters
@@ -34,8 +38,7 @@ export async function signup(formData: FormData): Promise<ActionResult> {
         timeCost: 2,
         outputLen: 32,
         parallelism: 1
-    });
-    console.log(passwordHash);
+    });    
     const userId = generateIdFromEntropySize(10); // 16 characters long
 
     // TODO: check if username is already used
@@ -44,9 +47,12 @@ export async function signup(formData: FormData): Promise<ActionResult> {
             id: userId,
             username: username,
             password_hash: passwordHash,
-            birthdate: new Date('Jul 12 2011'),
-            email: 'a@a.com',
-            createdAt: new Date('Jul 12 2011'),
+            birthdate: new Date(birthdate).toISOString(),
+			firstName: firstName,
+			lastName: lastName,			
+            email: email,
+			gender: gender === "masc" ? 'M' : gender === "fem" ? 'F' : gender === "other" ? 'O' : 'NR',
+            createdAt: new Date(Date.now()),
             status: 'A'
         }
     });
@@ -58,24 +64,27 @@ export async function signup(formData: FormData): Promise<ActionResult> {
 }
 
 export async function login(formData: FormData): Promise<ActionResult> {
-	"use server";
-	const username = formData.get("username");
+	const username = formData.get("username") as string;
+	/**
 	if (
 		typeof username !== "string" ||
-		username.length < 3 ||
-		username.length > 31 ||
+		username.length < 6 ||
+		username.length > 40 ||
 		!/^[a-z0-9_-]+$/.test(username)
 	) {
 		return {
-			error: "Invalid username"
+			error: "Usuario no válido"
 		};
 	}
-	const password = formData.get("password");
+		 */
+	const password = formData.get("password") as string;
+	/**
 	if (typeof password !== "string" || password.length < 6 || password.length > 255) {
 		return {
-			error: "Invalid password"
+			error: "Contraseña no válida"
 		};
 	}
+		 */
 
 	const existingUser = await prisma.users.findUnique({
         where: {
@@ -93,7 +102,7 @@ export async function login(formData: FormData): Promise<ActionResult> {
 		// it is crucial your implementation is protected against brute-force attacks with login throttling etc.
 		// If usernames are public, you may outright tell the user that the username is invalid.
 		return {
-			error: "Incorrect username or password"
+			error: "Usuario y/o contraseña incorrectos"
 		};
 	}
 
@@ -105,7 +114,7 @@ export async function login(formData: FormData): Promise<ActionResult> {
 	});
 	if (!validPassword) {
 		return {
-			error: "Incorrect username or password"
+			error: "Usuario y/o contraseña incorrectos"
 		};
 	}
 
@@ -116,7 +125,6 @@ export async function login(formData: FormData): Promise<ActionResult> {
 }
 
 export async function logout(): Promise<ActionResult> {
-	"use server";
 	const { session } = await validateRequest();
 	if (!session) {
 		return {
@@ -128,7 +136,7 @@ export async function logout(): Promise<ActionResult> {
 
 	const sessionCookie = lucia.createBlankSessionCookie();
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-	return redirect("/login");
+	return redirect("/");
 }
 
 interface ActionResult {

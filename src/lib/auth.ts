@@ -19,7 +19,12 @@ export const lucia = new Lucia(adapter, {
     getUserAttributes: (attributes) => {
 		return {
 			// attributes has the type of DatabaseUserAttributes
-			username: attributes.username
+			username: attributes.username,
+			firstName: attributes.firstName ?? "Anonimo",
+			lastName: attributes.lastName,
+			email: attributes.email,
+			gender: (attributes.gender==='M') ? "Masculino" : (attributes.gender==='F') ? 'Femenino' : (attributes.gender==='O') ? "Otro" : "-",
+			createdAt: attributes.createdAt
 		};
 	}
 });
@@ -60,4 +65,26 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
 	username: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	gender: string;
+	status: string;
+	createdAt: string;
+}
+
+export type SignUpInputs = {
+	username: string,
+	password: string,
+	confirmPassword: string,
+	email: string,
+	birthdate: any,
+	firstName: string,
+	lastName: string,
+	gender: "masc" | "fem" | "other" | "noAnswer";
+}
+
+export type SignInInputs = {
+	username: string,
+	password: string
 }

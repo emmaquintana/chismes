@@ -3,7 +3,7 @@ import React, { HTMLAttributes } from 'react'
 
 function MaxWidthWrapper({className, ...props}: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("max-w-96 sm:max-w-[500px] md:max-w-[740px] lg:max-w-[780px] xl:max-w-[1400px] w-full", className)}>
+    <div className={cn("max-w-96 sm:max-w-[500px] md:max-w-[740px] lg:max-w-[780px] xl:max-w-[1400px] w-full px-2", className)}>
         {props.children}        
     </div>
   )

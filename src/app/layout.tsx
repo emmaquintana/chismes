@@ -18,9 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es-419">
-      <body className={cn("min-h-screen", inter.className)}>
+      <body className={cn("block h-fit overflow-y-auto", inter.className)}>
         <Header />        
-        <div className="mt-16"> {/**Header's height is h-16 */}
+        <div className="mt-16 h-fit">
           {children}
         </div>
       </body>
