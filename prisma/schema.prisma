@@ -34,7 +34,7 @@ model users {
   bio           String?       @db.VarChar(2048)
   birthdate     DateTime      @db.Date
   createdAt     DateTime      @default(now()) @db.Timestamp(0)
-  email         String        @db.Text
+  email         String        @unique(map: "email") @db.VarChar(320)
   firstName     String?       @db.VarChar(40)
   followers     Int?          @db.UnsignedMediumInt
   follows       Int?          @db.UnsignedMediumInt
@@ -47,6 +47,12 @@ model users {
   username      String        @unique(map: "username") @db.VarChar(40)
   chismes       chismes[]
   session       session[]
+}
+
+model password_reset {
+  user_email String   @unique(map: "user_email") @db.VarChar(320)
+  token      String   @unique(map: "token") @db.VarChar(255)
+  createdAt  DateTime @db.DateTime(0)
 }
 
 enum users_status {

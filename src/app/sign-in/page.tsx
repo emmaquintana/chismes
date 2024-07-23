@@ -16,7 +16,7 @@ export default function Page() {
 		resolver: zodResolver(authSignInSchema)
 	});
 
-	const onSubmit = async (data: SignInInputs) => {				
+	const onSubmit = async (data: SignInInputs) => {
 		try {
 			// Creates a new  FormData object
 			const formData = new FormData();
@@ -27,15 +27,15 @@ export default function Page() {
 					formData.append(key, value.toString());
 				}
 			});
-			
-			const result = await login(formData);							
+
+			const result = await login(formData);
 			if (result.error) {
 				setError("root", {
 					type: "manual",
 					message: result.error
 				});
 			}
-		} catch (error) {			
+		} catch (error) {
 			console.error(error);
 		}
 	}
@@ -47,14 +47,15 @@ export default function Page() {
 				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 w-full">
 					<div className="flex flex-col gap-1">
 						<Label htmlFor="username" className="text-md">Nombre de usuario</Label>
-						<Input required={true} id="username" className="focus-visible:ring-0 focus:border-primary transition-colors" {...register("username")} />		
-						{errors.username?.message && <p className="text-sm text-destructive">{errors.username.message}</p>}					
+						<Input required={true} id="username" className="focus-visible:ring-0 focus:border-primary transition-colors" {...register("username")} />
+						{errors.username?.message && <p className="text-sm text-destructive">{errors.username.message}</p>}
 					</div>
 					<div className="flex flex-col gap-1">
 						<Label htmlFor="password" className="text-md">Contraseña</Label>
-						<Input required={true} type="password" id="password" className="focus-visible:ring-0 focus:border-primary transition-colors" {...register("password")} />												
-						{errors.password?.message && <p className="text-sm text-destructive">{errors.password.message}</p>}					
-					</div>					
+						<Input required={true} type="password" id="password" className="focus-visible:ring-0 focus:border-primary transition-colors" {...register("password")} />
+						{errors.password?.message && <p className="text-sm text-destructive">{errors.password.message}</p>}
+						<Link href="/reset-password" className="text-sky-500 text-md">Olvidé mi contraseña</Link>
+					</div>
 					{errors.root?.message && <p className="text-sm text-destructive">{errors.root.message}</p>}
 					<Button type="submit" className="focus-visible:ring-0 focus:border-primary transition-colors">Iniciar sesión</Button>
 				</form>

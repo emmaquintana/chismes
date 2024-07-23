@@ -27,7 +27,7 @@ export const signUpAuthSchema = z.object({
         errorMap: (issue, ctx) => {
             console.log("Gender value received:", ctx.data);
             return { message: "Selecciona un valor válido para el género" };
-          }
+        }
     }),
     birthdate: z.string()
         .refine((dateString) => {
@@ -53,3 +53,20 @@ export const authSignInSchema = z.object({
         message: "Debes ingresar una contraseña"
     })
 });
+
+export const resetPasswordSchema = z.object({
+    password: z.string().min(6, {
+        message: "La contraseña debe tener al menos 6 caracteres"
+    }).max(40, {
+        message: "La contraseña no debe tener más de 40 caracteres"
+    }),
+    confirmPassword: z.string().min(6, {
+        message: "La contraseña debe tener al menos 6 caracteres"
+    }).max(40, {
+        message: "La contraseña no debe tener más de 40 caracteres"
+    }),
+    slug: z.string().min(0)
+}).refine(data => data.password === data.confirmPassword, {
+    message: "Las contraseñas deben coincidir",
+    path: ["confirmPassword"]
+})
