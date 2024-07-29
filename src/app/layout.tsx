@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Header from "@/components/header";
 import cron from 'node-cron';
 import prisma from "@/lib/db";
+import TestingButton from "@/components/testing-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,7 @@ cron.schedule('*/1 * * * *', async () => {
       }
     });
 
-    if (deletedRecords) {      
+    if (deletedRecords.count > 0) {
       console.log(`Deleted ${deletedRecords.count} records from password_reset table in DB`);
     }
   } catch (error) {
@@ -49,6 +50,9 @@ export default function RootLayout({
         <div className="mt-16 h-fit">
           {children}
         </div>
+        {process.env.NODE_ENV !== 'production' &&
+          <TestingButton className="fixed left-2 bottom-2" />
+        }
       </body>
     </html>
   );

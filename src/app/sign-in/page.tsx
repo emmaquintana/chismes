@@ -56,7 +56,7 @@ export default function Page() {
 						{errors.password?.message && <p className="text-sm text-destructive">{errors.password.message}</p>}
 						<Link href="/reset-password" className="text-sky-500 text-md">Olvidé mi contraseña</Link>
 					</div>
-					{errors.root?.message && <p className="text-sm text-destructive">{errors.root.message}</p>}
+					{errors.root?.message && <p className="text-sm text-destructive animate-fade-in">{errors.root.message}</p>}
 					<Button type="submit" className="focus-visible:ring-0 focus:border-primary transition-colors">Iniciar sesión</Button>
 				</form>
 				<div className="w-full text-center">

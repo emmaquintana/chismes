@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createChismeSchema } from '@/app/validations/chismeSchema';
 import { createChisme } from '@/actions/chisme';
+import SubmitButton from './submit-button';
 
 function DialogCreateChisme({ className, content = "+" }: { className?: string, content?: string }) {
 
@@ -90,7 +91,7 @@ function DialogCreateChisme({ className, content = "+" }: { className?: string, 
                                 Cancelar
                             </Button>
                         </DialogClose>
-                        <Button type="submit">Publicar chisme</Button>                        
+                        <Button type="submit">Publicar chisme</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

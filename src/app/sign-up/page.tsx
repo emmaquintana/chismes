@@ -58,22 +58,22 @@ export default function Page() {
 					<div className="flex flex-col gap-1">
 						<Label htmlFor="username" className="text-md">Nombre de usuario<span className="text-destructive"> *</span></Label>
 						<Input id="username" {...register("username")} placeholder="Min. 6 caracteres - Max. 40 caracteres" className="focus-visible:ring-0 focus:border-primary transition-colors" />
-						{errors.username?.message && <p className="text-destructive text-sm">{errors.username.message}</p>}
+						{errors.username?.message && <p className="text-destructive text-sm animate-fade-in">{errors.username.message}</p>}
 					</div>
 					<div className="flex flex-col gap-1">
 						<Label htmlFor="password" className="text-md">Contraseña<span className="text-destructive"> *</span></Label>
 						<Input type="password" id="password" placeholder="Min. 6 caracteres - Max. 40 caracteres" {...register("password")} className="focus-visible:ring-0 focus:border-primary transition-colors" />
-						{errors.password?.message && <p className="text-destructive text-sm">{errors.password.message}</p>}
+						{errors.password?.message && <p className="text-destructive text-sm animate-fade-in">{errors.password.message}</p>}
 					</div>
 					<div className="flex flex-col gap-1">
 						<Label htmlFor="confirmPassword" className="text-md">Confirmar contraseña<span className="text-destructive"> *</span></Label>
 						<Input type="password" id="confirmPassword" {...register("confirmPassword")} className="focus-visible:ring-0 focus:border-primary transition-colors" />
-						{errors.confirmPassword?.message && <p className="text-destructive text-sm">{errors.confirmPassword.message}</p>}
+						{errors.confirmPassword?.message && <p className="text-destructive text-sm animate-fade-in">{errors.confirmPassword.message}</p>}
 					</div>
 					<div className="flex flex-col gap-1">
 						<Label htmlFor="email" className="text-md">Email<span className="text-destructive"> *</span></Label>
 						<Input id="email" {...register("email")} placeholder="example@gmail.com" className="focus-visible:ring-0 focus:border-primary transition-colors" />
-						{errors.email?.message && <p className="text-destructive text-sm">{errors.email.message}</p>}
+						{errors.email?.message && <p className="text-destructive text-sm animate-fade-in">{errors.email.message}</p>}
 					</div>
 					<div className="flex flex-col gap-1">
 						<HoverCard>
@@ -85,7 +85,7 @@ export default function Page() {
 							</HoverCardContent>
 						</HoverCard>
 						<Input type="date" id="birthdate" {...register("birthdate")} className="w-fit focus-visible:ring-0 focus:border-primary transition-colors" />
-						{errors.birthdate?.message && <p className="text-destructive text-sm">{errors.birthdate.message as string}</p>}
+						{errors.birthdate?.message && <p className="text-destructive text-sm animate-fade-in">{errors.birthdate.message as string}</p>}
 					</div>
 					<hr className="w-full" />
 					<div className="flex gap-1">
@@ -99,7 +99,7 @@ export default function Page() {
 						</div>
 					</div>
 					<hr className="w-full" />
-					<div className="flex flex-col gap-1">						
+					<div className="flex flex-col gap-1">
 						<Label htmlFor="gender" className="text-md">Género</Label>
 						<RadioGroup defaultValue="noAnswer" id="gender" {...register("gender")} value={genderValue}
 							onValueChange={setGenderValue}>
