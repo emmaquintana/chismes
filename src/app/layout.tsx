@@ -51,12 +51,12 @@ export default function RootLayout({
         <div className="mt-16 h-fit">
           {children}
         </div>
-        <div className="flex gap-2 fixed left-2 bottom-2 items-center">
+        <div className="flex gap-2 fixed left-4 bottom-4 items-center">
           {process.env.NODE_ENV !== 'production' &&
             <TestingButton />
           }
           {process.env.PREVIEW === 'true' &&
-            <p className="text-2xl text-muted-foreground">Preview Version</p>
+            <p className="text-3xl text-muted-foreground select-none">Preview Version</p>
           }
         </div>
       </body>
