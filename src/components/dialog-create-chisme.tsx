@@ -78,7 +78,7 @@ function DialogCreateChisme({ className, content = "+" }: { className?: string, 
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading} className={loading ? 'cursor-default' : 'cursor-pointer'}>
-                            {!loading &&
+                            {!loading && 
                                 <>Publicar chisme</>
                             }
                             {loading || isValidating && 
