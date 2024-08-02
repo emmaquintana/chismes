@@ -12,7 +12,7 @@ async function Header() {
     return (
         <header className="fixed top-0 h-fit py-4 w-full rounded-b-md bg-primary z-10">
             <nav className="flex items-center justify-between h-full w-full px-1">
-                <Link href="/" className="ml-5 text-3xl font-bold text-primary-foreground">Chismes (Alpha Version)</Link>
+                <Link href="/" className="ml-5 text-3xl font-bold text-primary-foreground">Chismes</Link>
                 <div className='hidden md:flex justify-between items-center'>
                     {user &&
                         <div className='flex items-center space-x-5'>                            
