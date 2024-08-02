@@ -28,9 +28,9 @@ function DialogCreateChisme({ className, content = "+" }: { className?: string, 
 
     const { register, formState: { errors, isSubmitting: loading, isValidating }, handleSubmit } = useForm({
         resolver: zodResolver(createChismeSchema)
-    });    
+    });
 
-    const { onSubmit } = useCreateChisme();    
+    const { onSubmit } = useCreateChisme();
 
     return (
         <Dialog>
@@ -78,15 +78,21 @@ function DialogCreateChisme({ className, content = "+" }: { className?: string, 
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading} className={loading ? 'cursor-default' : 'cursor-pointer'}>
-                            {!loading && 
+                            {!loading &&
                                 <>Publicar chisme</>
                             }
-                            {loading || isValidating && 
+                            {loading &&
                                 <div className='flex gap-2 items-center justify-center h-fit'>
                                     <LoadingIcon className='text-lg text-white font-bold' />
-                                    <p>Publicar chisme</p>                                    
+                                    <p>Publicar chisme</p>
                                 </div>
-                            }                                
+                            }
+                            {isValidating &&
+                                <div className='flex gap-2 items-center justify-center h-fit'>
+                                    <LoadingIcon className='text-lg text-white font-bold' />
+                                    <p>Publicar chisme</p>
+                                </div>
+                            }
                         </Button>
                     </DialogFooter>
                 </form>
