@@ -1,7 +1,6 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React from 'react'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './ui/alert-dialog';
 import { PopoverClose } from '@radix-ui/react-popover';
-import { cn } from '@/lib/utils';
 
 type CustomAlertDialogProps = {
     className?: string,    

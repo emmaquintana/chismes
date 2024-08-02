@@ -1,6 +1,5 @@
 "use client";
 
-import { updateChisme } from '@/actions/chisme';
 import { updateChismeSchema } from '@/app/validations/chismeSchema';
 import { Button } from "@/components/ui/button";
 import {
@@ -19,39 +18,17 @@ import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Textarea } from './ui/textarea';
-import { useState } from 'react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from './ui/alert-dialog';
+import useEditChisme from '@/custom-hooks/useEditChisme';
+import LoadingIcon from './loading-icon';
 
 function DialogEditChisme({ className, content = "Editar", chismeId }: { className?: string, content?: string, chismeId?: number }) {
     const { register, formState: { errors }, handleSubmit } = useForm({
         resolver: zodResolver(updateChismeSchema)
     });
-    const [confirmDialogIsDisplayed, setConfirmDialogIsDisplayed] = useState(false);
-    const [formData, setFormData] = useState(null);
 
-    const onSubmit = async (data: any) => {
-        setFormData(data);
-        setConfirmDialogIsDisplayed(true);
-    }
 
-    const handleConfirm = async () => {
-        try {
-            setConfirmDialogIsDisplayed(false);
-            
-            if (formData) {
-                const formDataObj = new FormData();
-                Object.entries(formData).forEach(([key, value]) => {
-                    if (value !== undefined && value !== null) {
-                        formDataObj.append(key, value.toString());
-                    }
-                });
-
-                const result = await updateChisme(formDataObj);                
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    const { onSubmit, loading, handleConfirm, confirmDialogIsDisplayed, setConfirmDialogIsDisplayed } = useEditChisme();
 
     return (
         <>
@@ -115,7 +92,17 @@ function DialogEditChisme({ className, content = "Editar", chismeId }: { classNa
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel className='text-md'>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleConfirm} className='text-md'>Confirmar</AlertDialogAction>
+                        <AlertDialogAction onClick={handleConfirm} className='text-md' disabled={loading}>
+                            {!loading &&
+                                <>Confirmar</>
+                            }
+                            {loading &&
+                                <div className='flex gap-2 items-center justify-center h-fit'>
+                                    <LoadingIcon className='text-lg text-white font-bold' />
+                                    <p>Confirmar</p>
+                                </div>
+                            }
+                        </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

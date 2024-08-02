@@ -21,30 +21,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createChismeSchema } from '@/app/validations/chismeSchema';
 import { createChisme } from '@/actions/chisme';
 import SubmitButton from './submit-button';
+import useCreateChisme from '@/custom-hooks/useCreateChisme';
+import LoadingIcon from './loading-icon';
 
 function DialogCreateChisme({ className, content = "+" }: { className?: string, content?: string }) {
 
-    const { register, formState: { errors }, handleSubmit } = useForm({
+    const { register, formState: { errors, isSubmitting: loading, isValidating }, handleSubmit } = useForm({
         resolver: zodResolver(createChismeSchema)
     });    
 
-    const onSubmit = async (data:any) => {				
-		try {
-			// Creates a new  FormData object
-			const formData = new FormData();
-
-			// Add every object to the FormData
-			Object.entries(data).forEach(([key, value]) => {
-				if (value !== undefined && value !== null) {
-					formData.append(key, value.toString());
-				}
-			});
-			
-			const result = await createChisme(formData);										            
-		} catch (error) {			
-			console.error(error);
-		}
-	}
+    const { onSubmit } = useCreateChisme();    
 
     return (
         <Dialog>
@@ -88,10 +74,20 @@ function DialogCreateChisme({ className, content = "+" }: { className?: string, 
                     <DialogFooter className='flex-row justify-end gap-2'>
                         <DialogClose asChild>
                             <Button type="button" variant="outline">
-                                Cancelar
+                                Cerrar
                             </Button>
                         </DialogClose>
-                        <Button type="submit">Publicar chisme</Button>
+                        <Button type="submit" disabled={loading} className={loading ? 'cursor-default' : 'cursor-pointer'}>
+                            {!loading &&
+                                <>Publicar chisme</>
+                            }
+                            {loading || isValidating && 
+                                <div className='flex gap-2 items-center justify-center h-fit'>
+                                    <LoadingIcon className='text-lg text-white font-bold' />
+                                    <p>Publicar chisme</p>                                    
+                                </div>
+                            }                                
+                        </Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

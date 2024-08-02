@@ -1,44 +1,15 @@
 "use client";
 
-import { login } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { authSignInSchema } from "../validations/authSchema";
-import { SignInInputs } from "@/lib/auth";
+import useSignIn from "@/custom-hooks/useSignIn";
+import LoadingIcon from "@/components/loading-icon";
 
 export default function Page() {
 
-	const { register, handleSubmit, formState: { errors }, setError } = useForm<SignInInputs>({
-		resolver: zodResolver(authSignInSchema)
-	});
-
-	const onSubmit = async (data: SignInInputs) => {
-		try {
-			// Creates a new  FormData object
-			const formData = new FormData();
-
-			// Add every object to the FormData
-			Object.entries(data).forEach(([key, value]) => {
-				if (value !== undefined && value !== null) {
-					formData.append(key, value.toString());
-				}
-			});
-
-			const result = await login(formData);
-			if (result.error) {
-				setError("root", {
-					type: "manual",
-					message: result.error
-				});
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	}
+	const { onSubmit, handleSubmit, errors, register, loading, isSubmitSuccessful, isSubmitted } = useSignIn();
 
 	return (
 		<div className="flex flex-col justify-center items-center w-full h-dvh">
@@ -57,7 +28,20 @@ export default function Page() {
 						<Link href="/reset-password" className="text-sky-500 text-md">Olvidé mi contraseña</Link>
 					</div>
 					{errors.root?.message && <p className="text-sm text-destructive animate-fade-in">{errors.root.message}</p>}
-					<Button type="submit" className="focus-visible:ring-0 focus:border-primary transition-colors">Iniciar sesión</Button>
+					<Button type="submit" className="focus-visible:ring-0 focus:border-primary transition-colors">
+						{!loading && !isSubmitSuccessful &&
+							<>Iniciar sesión</>
+						}
+						{loading &&
+							<div className='flex gap-2 items-center justify-center h-fit'>
+								<LoadingIcon className='text-lg text-white font-bold' />
+								<p>Iniciar sesión</p>
+							</div>
+						}
+						{!loading && isSubmitted && isSubmitSuccessful &&
+							<>Redirigiendo...</>							
+						}
+					</Button>
 				</form>
 				<div className="w-full text-center">
 					<p className="text-muted-foreground">¿Aún no tenés una cuenta?</p>

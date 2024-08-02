@@ -6,7 +6,6 @@ import Header from "@/components/header";
 import cron from 'node-cron';
 import prisma from "@/lib/db";
 import TestingButton from "@/components/testing-button";
-import { env } from "process";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,25 +15,25 @@ export const metadata: Metadata = {
 };
 
 // It deletes a register from password_reset that has 15 minutes or more.
-cron.schedule('*/1 * * * *', async () => {
-  const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
+//cron.schedule('*/1 * * * *', async () => {
+//  const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
 
-  try {
-    const deletedRecords = await prisma.password_reset.deleteMany({
-      where: {
-        createdAt: {
-          lte: fifteenMinutesAgo
-        }
-      }
-    });
+//  try {
+//    const deletedRecords = await prisma.password_reset.deleteMany({
+//      where: {
+//        createdAt: {
+//          lte: fifteenMinutesAgo
+//        }
+//      }
+//    });
 
-    if (deletedRecords.count > 0) {
-      console.log(`Deleted ${deletedRecords.count} records from password_reset table in DB`);
-    }
-  } catch (error) {
-    console.error('Error deleting records:', error);
-  }
-});
+//    if (deletedRecords.count > 0) {
+//      console.log(`Deleted ${deletedRecords.count} records from password_reset table in DB`);
+//    }
+//  } catch (error) {
+//    console.error('Error deleting records:', error);
+//  }
+//});
 
 export default function RootLayout({
   children,

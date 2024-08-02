@@ -10,14 +10,16 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpAuthSchema } from "../validations/authSchema";
-import { signup } from "@/actions/auth";
 import { SignUpInputs } from "@/lib/auth";
 import { useEffect, useState } from "react";
+import useSignUp from "@/custom-hooks/useSignUp";
+import LoadingIcon from "@/components/loading-icon";
 
 export default function Page() {
 
+	const { loading, onSubmit } = useSignUp();
 	const [genderValue, setGenderValue] = useState('noAnswer');
-	const { register, setValue, formState: { errors }, handleSubmit } = useForm<SignUpInputs>({
+	const { register, setValue, formState: { errors, isSubmitted, isSubmitSuccessful }, handleSubmit } = useForm<SignUpInputs>({
 		resolver: zodResolver(signUpAuthSchema),
 		defaultValues: {
 			gender: 'noAnswer'
@@ -27,28 +29,6 @@ export default function Page() {
 	useEffect(() => {
 		setValue('gender', genderValue as "masc" | "fem" | "other" | "noAnswer");
 	}, [genderValue, setValue]);
-
-	const onSubmit = async (data: SignUpInputs) => {
-		try {
-			// Creates a new FormData object
-			const formData = new FormData();
-
-			// Add every field to the formData
-			Object.entries(data).forEach(([key, value]) => {
-				if (value !== undefined && value !== null) {
-					if (key === 'birthdate' && value instanceof Date) {
-						formData.append(key, value.toISOString().split('T')[0]); // Formato YYYY-MM-DD
-					} else {
-						formData.append(key, value.toString());
-					}
-				}
-			});
-
-			await signup(formData);
-		} catch (error) {
-			console.error(error);
-		}
-	};
 
 	return (
 		<div className="w-full h-fit">
@@ -124,7 +104,20 @@ export default function Page() {
 					</div>
 					<hr className="w-full" />
 					<p className="text-muted-foreground"><span className="text-destructive"> *</span>: Obligatorio</p>
-					<Button type="submit" className="focus-visible:ring-0 focus:border-primary transition-colors">Registrarse</Button>
+					<Button type="submit" className="focus-visible:ring-0 focus:border-primary transition-colors">
+						{!loading && !isSubmitSuccessful &&
+							<>Registrarse</>
+						}
+						{loading &&
+							<div className='flex gap-2 items-center justify-center h-fit'>
+								<LoadingIcon className='text-lg text-white font-bold' />
+								<p>Registrarse</p>
+							</div>
+						}
+						{!loading && isSubmitted && isSubmitSuccessful &&
+							<>Redirigiendo...</>							
+						}
+					</Button>
 				</form>
 				<p className="text-muted-foreground">¿Ya tenés una cuenta? <Link href="/sign-in" className="text-sky-500">Iniciá sesión</Link></p>
 			</div>
