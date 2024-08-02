@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/header";
-import cron from 'node-cron';
-import prisma from "@/lib/db";
 import TestingButton from "@/components/testing-button";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -44,6 +42,7 @@ export default function RootLayout({
     <html lang="es-419">
       <head>
         <meta name="theme-color" content="hsl(278 71% 65%)"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86"></meta>
       </head>
       <body className={cn("block h-fit overflow-y-auto", inter.className)}>
         <Header />
@@ -54,8 +53,8 @@ export default function RootLayout({
           {process.env.NODE_ENV !== 'production' &&
             <TestingButton />
           }
-          {process.env.PREVIEW === 'true' &&
-            <p className="text-3xl text-muted-foreground select-none">Preview Version</p>
+          {process.env.ALPHA === 'true' &&
+            <p className="text-3xl text-muted-foreground select-none">Alpha Version</p>
           }
         </div>
       </body>
