@@ -3,56 +3,56 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("NEXT_PUBLIC_SUPABASE_DATABASE_URL")
 }
 
 model chismes {
-  user_id   String    @db.VarChar(48)
-  createdAt DateTime  @default(now()) @db.Timestamp(0)
-  desc      String    @db.VarChar(2048)
+  user_id   String    @db.VarChar(48) // PostgreSQL utiliza simplemente String
+  createdAt DateTime  @default(now())
+  desc      String
   id        Int       @id @default(autoincrement())
-  isActive  Int?      @db.TinyInt
-  title     String    @db.VarChar(250)
-  updatedAt DateTime? @db.Timestamp(0)
-  users     users     @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "chismes_ibfk_1")
+  isActive  Int? 
+  title     String
+  updatedAt DateTime?
+  users     users     @relation(fields: [user_id], references: [id], onUpdate: Restrict)
 
-  @@index([user_id], map: "user_id")
+  @@index([user_id])
 }
 
 model session {
   id        String   @id
   userId    String
   expiresAt DateTime
-  users     users    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Session_userId_fkey")
+  users     users    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId], map: "Session_userId_fkey")
+  @@index([userId])
 }
 
 model users {
   id            String        @id
-  bio           String?       @db.VarChar(2048)
-  birthdate     DateTime      @db.Date
-  createdAt     DateTime      @default(now()) @db.Timestamp(0)
-  email         String        @unique(map: "email") @db.VarChar(320)
-  firstName     String?       @db.VarChar(40)
-  followers     Int?          @db.UnsignedMediumInt
-  follows       Int?          @db.UnsignedMediumInt
+  bio           String?
+  birthdate     DateTime
+  createdAt     DateTime      @default(now())
+  email         String        @unique
+  firstName     String?
+  followers     Int?
+  follows       Int?
   gender        users_gender?
-  lastName      String?       @db.VarChar(40)
-  password_hash String?       @db.VarChar(255)
-  profilePhoto  Bytes?        @db.Blob
+  lastName      String?
+  password_hash String?
+  profilePhoto  Bytes?
   status        users_status
-  updatedAt     DateTime?     @db.Timestamp(0)
-  username      String        @unique(map: "username") @db.VarChar(40)
+  updatedAt     DateTime?
+  username      String        @unique
   chismes       chismes[]
   session       session[]
 }
 
 model password_reset {
-  user_email String   @unique(map: "user_email") @db.VarChar(320)
-  token      String   @unique(map: "token") @db.VarChar(255)
-  createdAt  DateTime @db.DateTime(0)
+  user_email String   @unique
+  token      String   @unique
+  createdAt  DateTime
 }
 
 enum users_status {
