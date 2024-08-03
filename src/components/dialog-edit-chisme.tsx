@@ -21,23 +21,33 @@ import { Textarea } from './ui/textarea';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from './ui/alert-dialog';
 import useEditChisme from '@/custom-hooks/useEditChisme';
 import LoadingIcon from './loading-icon';
+import { useState } from 'react';
 
 function DialogEditChisme({ className, content = "Editar", chismeId }: { className?: string, content?: string, chismeId?: number }) {
-    const { register, formState: { errors }, handleSubmit } = useForm({
+    const [isOpen, setIsOpen] = useState(false);
+    const { register, formState: { errors, isSubmitSuccessful }, handleSubmit, reset } = useForm({
         resolver: zodResolver(updateChismeSchema)
     });
 
 
     const { onSubmit, loading, handleConfirm, confirmDialogIsDisplayed, setConfirmDialogIsDisplayed } = useEditChisme();
 
+    const handleFormSubmit = async (data:any) => {
+        await onSubmit(data);
+        if (isSubmitSuccessful) {
+            reset();
+            setIsOpen(false);
+        }
+    }
+
     return (
         <>
-            <Dialog>
+            <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger className={cn('p-2 hover:bg-muted transition-colors', className)}>
                     {content}
                 </DialogTrigger>
                 <DialogContent className="md:max-w-[650px] sm:max-w-96">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(handleFormSubmit)}>
                         <DialogHeader>
                             <DialogTitle className='text-xl'>Editar chisme</DialogTitle>
                             <DialogDescription className='text-md'>

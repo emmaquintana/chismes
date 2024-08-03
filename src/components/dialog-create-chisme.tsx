@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -19,26 +19,33 @@ import { Textarea } from './ui/textarea';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createChismeSchema } from '@/app/validations/chismeSchema';
-import { createChisme } from '@/actions/chisme';
-import SubmitButton from './submit-button';
 import useCreateChisme from '@/custom-hooks/useCreateChisme';
 import LoadingIcon from './loading-icon';
 
 function DialogCreateChisme({ className, content = "+" }: { className?: string, content?: string }) {
 
-    const { register, formState: { errors, isSubmitting: loading, isValidating }, handleSubmit } = useForm({
+    const [isOpen, setIsOpen] = useState(false);
+    const { register, formState: { errors, isSubmitting: loading, isValidating, isSubmitSuccessful }, handleSubmit, reset } = useForm({
         resolver: zodResolver(createChismeSchema)
     });
 
     const { onSubmit } = useCreateChisme();
 
+    const handleFormSubmit = async (data: any) => {
+        await onSubmit(data);
+        if (isSubmitSuccessful) {
+            reset();
+            setIsOpen(false);
+        }
+    };
+
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <Button className={cn("active:scale-90 duration-75 transition-transform", className)}>{content}</Button>
             </DialogTrigger>
             <DialogContent className="md:max-w-[650px] sm:max-w-96">
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(handleFormSubmit)}>
                     <DialogHeader>
                         <DialogTitle className='text-xl'>Crear chisme</DialogTitle>
                         <DialogDescription className='text-md'>
