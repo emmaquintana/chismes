@@ -32,12 +32,10 @@ function DialogEditChisme({ className, content = "Editar", chismeId }: { classNa
 
     const { onSubmit, loading, handleConfirm, confirmDialogIsDisplayed, setConfirmDialogIsDisplayed } = useEditChisme();
 
-    const handleFormSubmit = async (data:any) => {
+    const handleFormSubmit = async (data: any) => {
         await onSubmit(data);
-        if (isSubmitSuccessful) {
-            reset();
-            setIsOpen(false);
-        }
+        reset();
+        setIsOpen(false);
     }
 
     return (

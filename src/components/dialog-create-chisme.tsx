@@ -32,11 +32,9 @@ function DialogCreateChisme({ className, content = "+" }: { className?: string, 
     const { onSubmit } = useCreateChisme();
 
     const handleFormSubmit = async (data: any) => {
-        await onSubmit(data);
-        if (isSubmitSuccessful) {
-            reset();
-            setIsOpen(false);
-        }
+        await onSubmit(data)        
+        reset();
+        setIsOpen(false)        
     };
 
     return (
