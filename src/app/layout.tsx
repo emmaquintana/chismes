@@ -53,7 +53,7 @@ export default function RootLayout({
           {process.env.NODE_ENV !== 'production' &&
             <TestingButton />
           }
-          {process.env.ALPHA === 'true' &&
+          {process.env.VERCEL_ENV !== 'production' &&
             <p className="text-3xl text-muted-foreground select-none">Alpha Version</p>
           }
         </div>
