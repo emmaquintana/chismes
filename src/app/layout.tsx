@@ -10,6 +10,19 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Chismes",
   description: "¿Sos una serpiente chismosa? ¡Entrá!",
+  authors: [{ name: 'Quintana Emmanuel', url: 'https://www.linkedin.com/in/emmanuel-quintana/' }],
+  category: 'Social Network',
+  robots: { index: true, follow: true },
+  keywords: ['Social network', 'Red social', 'Chismes', 'Red social chismes'],
+  applicationName: 'Chismes',
+  generator: 'Next.js',
+  publisher: 'Vercel',
+  icons: '/public/favicon.jpeg',
+  openGraph: {
+    title: 'Chismes',
+    description: '¿Sos una serpiente chismosa? ¡Entrá!',
+    images: '/public/favicon.jpeg',    
+  }  
 };
 
 // It deletes a register from password_reset that has 15 minutes or more.
@@ -40,9 +53,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es-419">
-      <head>
+      <head>        
         <meta name="theme-color" content="hsl(278 71% 65%)"></meta>
-        <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=4.0, minimum-scale=0.86"></meta>
       </head>
       <body className={cn("block h-fit overflow-y-auto", inter.className)}>
         <Header />
