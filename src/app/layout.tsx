@@ -21,7 +21,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Chismes',
     description: '¿Sos una serpiente chismosa? ¡Entrá!',
-    images: '/public/favicon.jpeg',    
+    images: {
+      url: '/public/favicon.jpeg',
+      height: 1024,
+      width: 1024
+    }    
   }  
 };
 
