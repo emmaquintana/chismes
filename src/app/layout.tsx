@@ -17,16 +17,17 @@ export const metadata: Metadata = {
   applicationName: 'Chismes',
   generator: 'Next.js',
   publisher: 'Vercel',
-  icons: '/public/favicon.jpeg',
+  icons: 'https://chismes.vercel.app/favicon.ico',
   openGraph: {
     title: 'Chismes',
     description: '¿Sos una serpiente chismosa? ¡Entrá!',
     images: {
-      url: '/public/favicon.jpeg',
+      url: 'https://chismes.vercel.app/favicon.ico',
+      width: 1024,
       height: 1024,
-      width: 1024
-    }    
-  }  
+      alt: 'Chismes Logo'
+    }
+  }
 };
 
 // It deletes a register from password_reset that has 15 minutes or more.
@@ -57,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es-419">
-      <head>        
+      <head>
         <meta name="theme-color" content="hsl(278 71% 65%)"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=4.0, minimum-scale=0.86"></meta>
       </head>
