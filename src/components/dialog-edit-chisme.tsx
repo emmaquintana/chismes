@@ -23,14 +23,12 @@ import useEditChisme from '@/custom-hooks/useEditChisme';
 import LoadingIcon from './loading-icon';
 import { useState } from 'react';
 
-function DialogEditChisme({ className, content = "Editar", chismeId }: { className?: string, content?: string, chismeId?: number }) {
+function DialogEditChisme({ className, content = "Editar", chismeId }: { className?: string, content?: string, chismeId: number }) {
     const [isOpen, setIsOpen] = useState(false);
     const { register, formState: { errors, isSubmitSuccessful }, handleSubmit, reset } = useForm({
         resolver: zodResolver(updateChismeSchema)
-    });
-
-
-    const { onSubmit, loading, handleConfirm, confirmDialogIsDisplayed, setConfirmDialogIsDisplayed } = useEditChisme();
+    });        
+    const { onSubmit, loading, handleConfirm, confirmDialogIsDisplayed, setConfirmDialogIsDisplayed, values } = useEditChisme(chismeId);
 
     const handleFormSubmit = async (data: any) => {
         await onSubmit(data);
@@ -61,7 +59,9 @@ function DialogEditChisme({ className, content = "Editar", chismeId }: { classNa
                                     id="title"
                                     placeholder='Min. 12 caracteres - Max. 92 caracteres'
                                     className="text-md focus:border-primary focus-visible:ring-0 transition-colors"
-                                    {...register("title")}
+                                    {...register("title")}       
+                                    defaultValue={values.title}    
+                                    autoFocus={false}
                                 />
                                 {errors.title?.message && <p className='text-md text-destructive'>{errors.title.message as string}</p>}
                             </div>
@@ -73,7 +73,9 @@ function DialogEditChisme({ className, content = "Editar", chismeId }: { classNa
                                     id="description"
                                     className='text-md resize-none focus-visible:ring-0 focus:border-primary'
                                     placeholder='Min. 42 caracteres - Max. 2048 caracteres'
-                                    {...register("desc")}
+                                    {...register("desc")}       
+                                    defaultValue={values.desc}                
+                                    autoFocus={false}
                                 />
                                 {errors.desc?.message && <p className='text-md text-destructive'>{errors.desc.message as string}</p>}
                                 <Input type="hidden" {...register("chismeId")} value={chismeId} />

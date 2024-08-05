@@ -82,3 +82,18 @@ export async function updateChisme(formData: FormData) {
         console.error(err);
     }
 }
+
+export async function obtainChisme(chismeId: number) {
+    try {
+        const chisme = await prisma.chismes.findUnique({
+            where: {
+                id: chismeId
+            }
+        });
+        
+        return chisme;
+    }
+    catch (err) {
+        console.log(err as Error);
+    }
+}

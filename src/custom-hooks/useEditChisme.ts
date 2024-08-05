@@ -1,13 +1,17 @@
 "use client";
 
-import { updateChisme } from "@/actions/chisme";
-import { useState } from "react";
+import { obtainChisme, updateChisme } from "@/actions/chisme";
+import { useEffect, useState } from "react";
 
-export default function useEditChisme() {
+export default function useEditChisme(chismeId: number) {
 
     const [loading, setLoading] = useState(false);
     const [confirmDialogIsDisplayed, setConfirmDialogIsDisplayed] = useState(false);
     const [formData, setFormData] = useState(null);
+    const [{title, desc}, setTitleDesc] = useState({
+        title: '',
+        desc: ''
+    });
 
     const onSubmit = async (data: any) => {
         setFormData(data);
@@ -37,5 +41,16 @@ export default function useEditChisme() {
         }
     }
 
-    return { loading, onSubmit, handleConfirm, confirmDialogIsDisplayed, setConfirmDialogIsDisplayed, formData, setFormData }
+    useEffect(() => {        
+        const f = async () => {
+            const chisme = await obtainChisme(chismeId);
+            setTitleDesc({
+                desc: chisme?.desc!,
+                title: chisme?.title!
+            });
+        }
+        f();
+    }, []);
+
+    return { loading, onSubmit, handleConfirm, confirmDialogIsDisplayed, setConfirmDialogIsDisplayed, formData, setFormData, values: {title, desc} }
 }
