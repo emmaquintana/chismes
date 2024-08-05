@@ -18,9 +18,7 @@ import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Textarea } from './ui/textarea';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from './ui/alert-dialog';
 import useEditChisme from '@/custom-hooks/useEditChisme';
-import LoadingIcon from './loading-icon';
 import { useState } from 'react';
 
 function DialogEditChisme({ className, content = "Editar", chismeId }: { className?: string, content?: string, chismeId: number }) {
