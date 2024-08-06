@@ -17,8 +17,7 @@ type ChismeCardProps = HTMLAttributes<HTMLDivElement> & {
 async function ChismeCard({ className, ...props }: ChismeCardProps) {
 
     const user = await obtainUser(props.user_id!);
-
-    props.createdAt?.setHours(props.createdAt.getHours() + 3);
+    
     const dateObj = {
         day: props.createdAt?.getDate(),
         month: props.createdAt?.getMonth()! + 1,
