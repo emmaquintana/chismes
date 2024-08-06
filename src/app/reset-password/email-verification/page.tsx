@@ -30,7 +30,7 @@ function Page() {
         <div className='flex flex-col w-full h-fit items-center gap-5 text-center'>
             <MaxWidthWrapper className='flex flex-col w-full h-full items-center gap-5 mt-10'>
                 <h1 className='text-4xl font-extrabold '>Reestablecer contraseña</h1>
-                <p className='text-lg'>Verifica tu dirección de correo electrónico (<Link className='text-sky-400' href={`mailto:${email}`}>eqb2021@gmail.com</Link>) para continuar con el proceso de recuperación de contraseña</p>
+                <p className='text-lg'>Verifica tu dirección de correo electrónico (<Link className='text-sky-400' href={`mailto:${email}`}>{email}</Link>) para continuar con el proceso de recuperación de contraseña</p>
                 <p className='text-lg text-muted-foreground'>¿No recibiste el correo? <span className={cn('text-sky-400 cursor-pointer', {
                     "text-gray-500": time > 0 && time <= topTimeLimit,
                     "cursor-default": time > 0 && time <= topTimeLimit
