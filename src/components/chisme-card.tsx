@@ -16,7 +16,18 @@ type ChismeCardProps = HTMLAttributes<HTMLDivElement> & {
 
 async function ChismeCard({ className, ...props }: ChismeCardProps) {
 
-    const user = await obtainUser(props.user_id!);    
+    const user = await obtainUser(props.user_id!);
+
+    props.createdAt?.setHours(props.createdAt.getHours() + 3);
+    const dateObj = {
+        day: props.createdAt?.getDate(),
+        month: props.createdAt?.getMonth()! + 1,
+        year: props.createdAt?.getFullYear(),
+        hour: props.createdAt?.getHours(),
+        minute: props.createdAt?.getMinutes()! < 10 ? "0" + props.createdAt?.getMinutes() : props.createdAt?.getMinutes(),
+        second: props.createdAt?.getSeconds(),
+    }
+    const date = `${dateObj.day}-${dateObj.month}-${dateObj.year} ${dateObj.hour}:${dateObj.minute}`
 
     return (
         <div className={cn("flex flex-col shadow-md rounded-md bg-background w-full h-fit min-h-10", className)} {...props}>
@@ -28,12 +39,12 @@ async function ChismeCard({ className, ...props }: ChismeCardProps) {
                             {user &&
                                 <>
                                     <p className="text-left">{user.firstName ?? "Anónimo"} {user.lastName}</p>
-                                    <p className="text-left text-muted-foreground">Escrito hace N tiempo</p>
+                                    <p className="text-left text-muted-foreground">{date}</p>
                                 </>}
                             {!user &&
                                 <>
                                     <p className="text-left">Nombre de usuario</p>
-                                    <p className="text-left text-muted-foreground">Escrito hace N tiempo</p>
+                                    <p className="text-left text-muted-foreground">{date}</p>
                                 </>}
                         </div>
                     </div>
