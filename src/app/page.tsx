@@ -22,6 +22,7 @@ export default async function Home() {
             desc={chisme.desc}
             user_id={chisme.user_id}
             key={chisme.id}
+            createdAt={chisme.createdAt}
             currentUserId={session?.userId}
           />
         ))}

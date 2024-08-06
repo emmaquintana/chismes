@@ -21,16 +21,21 @@ export async function obtainAllChismes() {
 
 export async function createChisme(formData: FormData) {
     try {
+        // Obtains data from formData and user's data from validateRequest() function
         const title = formData.get("title") as string;
         const desc = formData.get("desc") as string;
         const user = await validateRequest();
+
+        // Obtains current date but in GMT-3
+        const gmt3Date = new Date(Date.now());
+        gmt3Date.setHours(gmt3Date.getHours() - 3);
 
         // Creates the chisme
         const chisme = await prisma.chismes.create({
             data: {
                 title: title,
                 desc: desc,
-                createdAt: new Date(Date.now()),
+                createdAt: gmt3Date,
                 isActive: 1,
                 user_id: user.user?.id!
             }
@@ -61,7 +66,7 @@ export async function updateChisme(formData: FormData) {
     try {
         const title = formData.get("title") as string;
         const desc = formData.get("desc") as string;
-        const chismeId = formData.get("chismeId");        
+        const chismeId = formData.get("chismeId");
 
         const updatedChisme = await prisma.chismes.update({
             where: {
@@ -70,7 +75,7 @@ export async function updateChisme(formData: FormData) {
             data: {
                 title,
                 desc,
-                updatedAt: new Date(Date.now())        
+                updatedAt: new Date(Date.now())
             }
         });
 
@@ -90,7 +95,7 @@ export async function obtainChisme(chismeId: number) {
                 id: chismeId
             }
         });
-        
+
         return chisme;
     }
     catch (err) {
