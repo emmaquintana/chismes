@@ -42,7 +42,7 @@ async function ChismeCard({ className, ...props }: ChismeCardProps) {
                     }
                 </div>
             </div>
-            <Link href={`/chisme?id=${props.id}`} className='p-4 space-y-2'>
+            <Link href={`/chisme/${props.id}`} className='p-4 space-y-2'>
                 <h3 className='font-extrabold'>{props.title}</h3>
                 <p>{props.desc}</p>
             </Link>
