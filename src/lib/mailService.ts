@@ -50,7 +50,7 @@ export const sendMail = async (info: EmailProps) => {
 }
 
 export async function sendMailForResetPassword(destEmail: string) {
-    const dominio = process.env.NODE_ENV === 'production' ? "https://chismes-ar.com" : "http://localhost:3000";
+    const dominio = process.env.NODE_ENV === 'production' ? "https://chismes.vercel.app" : "http://localhost:3000";
     const token = randomString(15);
     const randomLink = `${dominio}/reset-password/${token}`;
 
