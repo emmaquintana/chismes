@@ -15,7 +15,8 @@ async function Header() {
                 <Link href="/" className="ml-5 text-3xl font-bold text-primary-foreground">Chismes</Link>
                 <div className='hidden md:flex justify-between items-center'>
                     {user &&
-                        <div className='flex items-center space-x-5'>                            
+                        <div className='flex items-center space-x-5'>
+                            <Link href="/profile" className='text-primary-foreground font-bold text-lg'>Mi Perfil</Link>
                             <p className='font-bold text-lg text-primary-foreground tracking-wide'>¡Hola {user.firstName}!</p>
                             <form action={logout}>
                                 <Button className='text-primary-foreground font-bold text-lg'>Cerrar sesión</Button>

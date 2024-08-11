@@ -23,3 +23,19 @@ export async function wait(ms: number) {
     }, ms)
   });
 }
+
+export const dateObj = (props: Date) => {
+  return {
+    day: props.getDate(),
+    month: props.getMonth()! + 1,
+    year: props.getFullYear(),
+    hour: props.getHours(),
+    minute: props.getMinutes()! < 10 ? "0" + props.getMinutes() : props.getMinutes(),
+    second: props.getSeconds()
+  }
+}
+
+/**Cmon man, common date is in format DD/MM/YY HH:MM */
+export const getCommonDate = (date:Date) => {
+  return `${dateObj(date).day}-${dateObj(date).month}-${dateObj(date).year} ${dateObj(date).hour}:${dateObj(date).minute}`
+}

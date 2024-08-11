@@ -32,14 +32,16 @@ function MobileHeaderMenu({ className, ...props }: MobileHeaderProps) {
                 </button>
                 <div className='flex flex-col flex-wrap items-center justify-center h-full w-full'>
                     {props.user &&
-                        <form action={props.logoutAction}>
-                            <Button className='text-primary-foreground font-bold text-lg select-none' onClick={() => setMenuIsDisplayed(false)}>Cerrar sesión</Button>
+                        <form action={props.logoutAction} className='flex flex-col items-center gap-4'>
+                            <Button className='text-primary-foreground font-bold text-3xl select-none' onClick={() => setMenuIsDisplayed(false)}>Cerrar sesión</Button>
+                            <Link href="/profile" onClick={() => setMenuIsDisplayed(false)} className='text-primary-foreground font-bold text-3xl select-none'>Mi Perfil</Link>
                         </form>
                     }
                     {!props.user &&
                         <div className='flex flex-col gap-6 items-center'>
                             <Link href="/sign-in" onClick={() => setMenuIsDisplayed(false)} className='text-primary-foreground font-bold text-3xl select-none'>Iniciar sesión</Link>
                             <Link href="/sign-up" onClick={() => setMenuIsDisplayed(false)} className='text-primary-foreground font-bold text-3xl select-none'>Registrarse</Link>
+                            <Link href="/profile" onClick={() => setMenuIsDisplayed(false)} className='text-primary-foreground font-bold text-3xl select-none'>Mi Perfil</Link>
                         </div>
                     }
                 </div>
