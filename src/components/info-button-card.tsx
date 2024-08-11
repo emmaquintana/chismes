@@ -90,7 +90,7 @@ export function InfoButtonEditCardForm(props: InfoButtonEditCardFormProps) {
     const { register, formState: { errors, isSubmitting, isValidating }, handleSubmit, watch, setError } = useForm<z.infer<typeof validationSchema>>({
         resolver: zodResolver(validationSchema),
         defaultValues: {
-            firstName: props.desc as string,
+            [name]: props.desc as string,
         },
         mode: "onSubmit"
     });
