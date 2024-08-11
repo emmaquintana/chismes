@@ -81,6 +81,13 @@ const config = {
         "to-full-screen-left-x": {
           from: { left: "0" },
           to: { left: "-100dvw" }
+        },
+        'shake-x': {
+          '0%, 100%': { transform: 'translateX(2px)' },
+          '50%': { transform: 'translateX(-2px)' },
+        },
+        "rotate-360": {
+          to: { rotate: '360deg' }
         }
       },
       animation: {
@@ -89,7 +96,9 @@ const config = {
         "fade-in": "fade-in 0.2s ease-in",
         "fade-in-scale": "fade-in-scale 0.4s",
         "to-zero-x": "to-zero-x 0.5s forwards",
-        "to-full-left-x": "to-full-screen-left-x 0.5s forwards"
+        "to-full-left-x": "to-full-screen-left-x 0.5s forwards",
+        "shake-x": "shake-x 0.2s alternate infinite",
+        "rotate-360": "rotate-360 .5s forwards"
       },
     },
   },

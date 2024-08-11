@@ -24,7 +24,10 @@ export const lucia = new Lucia(adapter, {
 			lastName: attributes.lastName,
 			email: attributes.email,
 			gender: (attributes.gender==='M') ? "Masculino" : (attributes.gender==='F') ? 'Femenino' : (attributes.gender==='O') ? "Otro" : "-",
-			createdAt: attributes.createdAt
+			createdAt: attributes.createdAt,
+			follows: attributes.follows,
+			followers: attributes.followers,
+			birthdate: attributes.birthdate
 		};
 	}
 });
@@ -71,6 +74,9 @@ interface DatabaseUserAttributes {
 	gender: string;
 	status: string;
 	createdAt: string;
+	follows: number;
+	followers: number;
+	birthdate: Date;
 }
 
 export type SignUpInputs = {

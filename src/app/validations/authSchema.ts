@@ -2,6 +2,25 @@ import z from 'zod';
 
 const genders = ["masc", "fem", "other", "noAnswer"] as const;
 
+export const userValidationsNumbers = {
+    username: {
+        MIN: 6,
+        MAX: 40
+    },
+    password: {
+        MIN: 6,
+        MAX: 40
+    },
+    firstName: {
+        MIN: 0,
+        MAX: 16
+    },
+    lastName: {
+        MIN: 0,
+        MAX: 16
+    }
+}
+
 export const signUpAuthSchema = z.object({
     username: z.string().min(6, {
         message: "El nombre de usuario debe tener al menos 6 caracteres"
@@ -70,3 +89,43 @@ export const resetPasswordSchema = z.object({
     message: "Las contraseñas deben coincidir",
     path: ["confirmPassword"]
 })
+
+export const editFirstNameSchema = z.object({
+    firstName: z.string()
+        .min(userValidationsNumbers.firstName.MIN, {
+            message: `El nombre debe tener al menos ${userValidationsNumbers.firstName.MIN} caracteres`
+        })
+        .max(userValidationsNumbers.firstName.MAX, {
+            message: `El nombre no debe tener más de ${userValidationsNumbers.firstName.MAX} caracteres`
+        }),
+    userId: z.string()
+});
+
+export const editLastNameSchema = z.object({
+    lastName: z.string()
+        .min(userValidationsNumbers.lastName.MIN, {
+            message: `El apellido debe tener al menos ${userValidationsNumbers.lastName.MIN} caracteres`
+        })
+        .max(userValidationsNumbers.lastName.MAX, {
+            message: `El apellido no debe tener más de ${userValidationsNumbers.lastName.MAX} caracteres`
+        }),
+    userId: z.string()
+});
+
+export const editUsernameSchema = z.object({
+    username: z.string()
+        .min(userValidationsNumbers.username.MIN, {
+            message: `El nombre de usuario debe tener al menos ${userValidationsNumbers.username.MIN} caracteres`
+        })
+        .max(userValidationsNumbers.username.MAX, {
+            message: `El nombre de usuario no debe tener más de ${userValidationsNumbers.username.MAX} caracteres`
+        }),
+    userId: z.string()
+});
+
+export const editEmailSchema = z.object({
+    email: z.string().email({
+        message: "No es un email válido"
+    }),
+    userId: z.string()
+});
