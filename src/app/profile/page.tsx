@@ -14,7 +14,7 @@ import { editFirstNameSchema } from "../validations/authSchema";
 async function Page() {
 
     const user = await validateRequest();
-
+ 
     if (!user.user) {
         return (
             <section>
