@@ -48,7 +48,7 @@ export async function signup(formData: FormData): Promise<ActionResult> {
 			username: username,
 			password_hash: passwordHash,
 			birthdate: new Date(birthdate).toISOString(),
-			firstName: firstName,
+			firstName: firstName === '' ? 'Anónimo' : firstName,
 			lastName: lastName,
 			email: email,
 			gender: gender === "masc" ? 'M' : gender === "fem" ? 'F' : gender === "other" ? 'O' : 'NR',
