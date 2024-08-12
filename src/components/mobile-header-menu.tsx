@@ -41,7 +41,6 @@ function MobileHeaderMenu({ className, ...props }: MobileHeaderProps) {
                         <div className='flex flex-col gap-6 items-center'>
                             <Link href="/sign-in" onClick={() => setMenuIsDisplayed(false)} className='text-primary-foreground font-bold text-3xl select-none'>Iniciar sesión</Link>
                             <Link href="/sign-up" onClick={() => setMenuIsDisplayed(false)} className='text-primary-foreground font-bold text-3xl select-none'>Registrarse</Link>
-                            <Link href="/profile" onClick={() => setMenuIsDisplayed(false)} className='text-primary-foreground font-bold text-3xl select-none'>Mi Perfil</Link>
                         </div>
                     }
                 </div>
