@@ -1,12 +1,13 @@
 ## Inicio 
 
 Esta app se encuentra alojada en [Chismes Page](https://chismes.vercel.app/) usando [Vercel](https://vercel.com/home). Está desarrollada con:
-- NextJS
+- NextJS 14
 - Typescript 
 - TailwindCSS
 - ShadcnUI
 - Lucia Auth
 - Supabase
+- Prisma
 
 ## Ejecución en local
 
