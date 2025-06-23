@@ -1,6 +1,10 @@
-## Inicio 
+# What is "Chismes" about?
 
-Esta app se encuentra alojada en [Chismes Page](https://chismes.vercel.app/) usando [Vercel](https://vercel.com/home). Está desarrollada con:
+Chismes ("gossips" in English) is a social network Twitter-like where users can post Chismes anonymously and other users can like and comment them.
+
+# Getting started
+
+This app is hosted on [Chismes Page](https://chismes.vercel.app/) using [Vercel](https://vercel.com/home). It is built over:
 - NextJS 14
 - Typescript 
 - TailwindCSS
@@ -9,9 +13,11 @@ Esta app se encuentra alojada en [Chismes Page](https://chismes.vercel.app/) usa
 - Supabase
 - Prisma
 
-## Ejecución en local
+> **Note:** Currently, this project is still in early development phases.
 
-Puede correr el servidor de desarrollo usando: 
+## Running locally
+
+You can run a dev server using either of these commands:
 
 ```bash
 npm run dev
@@ -23,4 +29,4 @@ pnpm dev
 bun dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000) en su navegador para ver el resultado.
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
